@@ -1,0 +1,28 @@
+[
+    {
+        "image": "demo/images/10095.png",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>\nWhat type of chart is shown in this image?"
+            },
+            {
+                "from": "gpt",
+                "value": "This appears to be a line chart showing trends over time."
+            }
+        ]
+    },
+    {
+        "image": "demo/images/10149.png",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>\nDescribe this chart."
+            },
+            {
+                "from": "gpt",
+                "value": "This is a bar chart showing data across different years."
+            }
+        ]
+    }
+] 

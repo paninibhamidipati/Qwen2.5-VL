@@ -1,0 +1,28 @@
+[
+    {
+        "image": "demo/images/COCO_train2014_000000580957.jpg",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>\nWhat objects can you see in this image?"
+            },
+            {
+                "from": "gpt",
+                "value": "I can see various objects in this indoor scene."
+            }
+        ]
+    },
+    {
+        "image": "demo/images/10095.png",
+        "conversations": [
+            {
+                "from": "human",
+                "value": "<image>\nWhat are the main categories in this graph?"
+            },
+            {
+                "from": "gpt",
+                "value": "The main categories are 'Favorable' and 'Unfavorable'."
+            }
+        ]
+    }
+] 

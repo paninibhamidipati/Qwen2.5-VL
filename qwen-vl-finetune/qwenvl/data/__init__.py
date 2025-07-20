@@ -26,12 +26,25 @@ VIDEOCHATGPT = {
     "data_path": "PATH_TO_VIDEOCHATGPT_DATA",
 }
 
+# Add dummy public datasets for testing
+PUBLIC_DATASET1 = {
+    "annotation_path": "demo/dummy_dataset1.json",
+    "data_path": "",
+}
+
+PUBLIC_DATASET2 = {
+    "annotation_path": "demo/dummy_dataset2.json",
+    "data_path": "",
+}
+
 data_dict = {
     "cambrian_737k": CAMBRIAN_737K,
     "cambrian_737k_pack": CAMBRIAN_737K_PACK,
     "mp_doc": MP_DOC,
     "clevr_mc": CLEVR_MC,
     "videochatgpt": VIDEOCHATGPT,
+    "public_dataset1": PUBLIC_DATASET1,
+    "public_dataset2": PUBLIC_DATASET2,
 }
 
 
