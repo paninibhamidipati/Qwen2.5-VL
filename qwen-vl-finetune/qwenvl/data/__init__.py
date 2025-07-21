@@ -37,6 +37,11 @@ PUBLIC_DATASET2 = {
     "data_path": "",
 }
 
+SEQUENCES_SESSION_20250720_165353 = {
+    "annotation_path": "demo/sequences_session_20250720_165353.json",
+    "data_path": "/workspace/Qwen2.5-VL/qwen-vl-finetune",
+}
+
 data_dict = {
     "cambrian_737k": CAMBRIAN_737K,
     "cambrian_737k_pack": CAMBRIAN_737K_PACK,
@@ -45,6 +50,7 @@ data_dict = {
     "videochatgpt": VIDEOCHATGPT,
     "public_dataset1": PUBLIC_DATASET1,
     "public_dataset2": PUBLIC_DATASET2,
+    "sequences_session_20250720_165353": SEQUENCES_SESSION_20250720_165353,
 }
 
 

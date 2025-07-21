@@ -1,0 +1,54 @@
+[
+  {
+    "image": "session_20250720_165353/frames/frame_000003.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nclicks to move e2 to e4"
+      },
+      {
+        "from": "gpt",
+        "value": "<tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [505, 679]}}</tool_call><tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [505, 543]}}</tool_call>"
+      }
+    ]
+  },
+  {
+    "image": "session_20250720_165353/frames/frame_000009.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nclicks to move f1 to c4"
+      },
+      {
+        "from": "gpt",
+        "value": "<tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [547, 745]}}</tool_call><tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [421, 547]}}</tool_call>"
+      }
+    ]
+  },
+  {
+    "image": "session_20250720_165353/frames/frame_000016.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nclicks to move g1 to h3"
+      },
+      {
+        "from": "gpt",
+        "value": "<tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [596, 743]}}</tool_call><tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [632, 616]}}</tool_call>"
+      }
+    ]
+  },
+  {
+    "image": "session_20250720_165353/frames/frame_000020.png",
+    "conversations": [
+      {
+        "from": "human",
+        "value": "<image>\nclicks to move e1 to g1"
+      },
+      {
+        "from": "gpt",
+        "value": "<tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [505, 747]}}</tool_call><tool_call>{\"name\": \"computer_use\", \"arguments\": {\"action\": \"left_click\", \"coordinate\": [582, 746]}}</tool_call>"
+      }
+    ]
+  }
+]
