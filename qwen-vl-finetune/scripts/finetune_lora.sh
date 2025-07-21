@@ -10,7 +10,8 @@ NNODES=${WORLD_SIZE:-1}
 deepspeed=./scripts/zero2.json
 
 # Model configuration
-llm=Qwen/Qwen2.5-VL-7B-Instruct  # Using HuggingFace model ID
+# llm=Qwen/Qwen2.5-VL-7B-Instruct  # Using HuggingFace model ID
+llm=Qwen/Qwen2.5-VL-3B-Instruct
 
 # Training hyperparameters
 lr=1e-4
@@ -21,10 +22,11 @@ grad_accum_steps=1
 entry_file=qwenvl/train/train_qwen.py
 
 # Dataset configuration (replace with public dataset names)
-datasets=public_dataset1,public_dataset2
+# datasets=public_dataset1,public_dataset2
+datasets=sequences_session_20250720_165353
 
 # Output configuration
-run_name="qwen2vl-baseline"
+run_name="qwen2vl-baseline_100epochs"
 output_dir=./output
 
 # Training arguments
@@ -39,7 +41,7 @@ args="
     --lora_enable True \
     --bf16 True \
     --output_dir ${output_dir} \
-    --num_train_epochs 10 \
+    --num_train_epochs 100 \
     --per_device_train_batch_size ${batch_size} \
     --per_device_eval_batch_size $((batch_size*2)) \
     --gradient_accumulation_steps ${grad_accum_steps} \
@@ -47,7 +49,7 @@ args="
     --min_pixels 784 \
     --eval_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 1000 \
+    --save_steps 20 \
     --save_total_limit 1 \
     --learning_rate ${lr} \
     --weight_decay 0 \
