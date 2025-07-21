@@ -2,7 +2,7 @@ import argparse
 import json
 from typing import List, Tuple, Union
 
-from IPython.display import display
+# from IPython.display import display
 from PIL import Image, ImageColor, ImageDraw
 from qwen_agent.llm.fncall_prompts.nous_fncall_prompt import (
     ContentItem,
@@ -211,6 +211,9 @@ def perform_gui_grounding(screenshot_path, user_query, model, processor):
     text = processor.apply_chat_template(
         message, tokenize=False, add_generation_prompt=True
     )
+
+    # print(text)
+
     inputs = processor(
         text=[text], images=[input_image], padding=True, return_tensors="pt"
     ).to("cuda")
@@ -225,6 +228,8 @@ def perform_gui_grounding(screenshot_path, user_query, model, processor):
         generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=True
     )[0]
 
+    print(output_text)
+    
     # Parse action and visualize
     action = json.loads(
         output_text.split("<tool_call>\n")[1].split("\n</tool_call>")[0]
@@ -238,11 +243,12 @@ def perform_gui_grounding(screenshot_path, user_query, model, processor):
 
 
 if __name__ == "__main__":
+    # model_path = "/workspace/Qwen2.5-VL/qwen-vl-finetune/Qwen2.5-VL-3B-Instruct-lora-merged-100"
     model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
     processor = Qwen2_5_VLProcessor.from_pretrained(model_path)
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model_path, torch_dtype=torch.bfloat16, attn_implementation="flash_attention_2",device_map="auto")
-    screenshot = "/workspace/Qwen2.5-VL/cookbooks/assets/computer_use/computer_use2.jpeg"
-    user_query = 'open the third issue'
+    screenshot = "/workspace/Qwen2.5-VL/qwen-vl-finetune/session_20250720_165353/frames/frame_000003.png"
+    user_query = 'clicks to move e2 to e4'
     output_text, display_image = perform_gui_grounding(screenshot, user_query, model, processor)
     print(output_text)
 
