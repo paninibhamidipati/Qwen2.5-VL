@@ -99,7 +99,9 @@ For each function call, return a json object with function name and arguments wi
         message, tokenize=False, add_generation_prompt=True
     )
 
-    # print(text)
+    print("---------- INPUT TEXT ------------------")
+    print(text)
+    print("---------- INPUT TEXT ------------------")
 
     inputs = processor(
         text=[text], images=[input_image], padding=True, return_tensors="pt"
@@ -138,17 +140,12 @@ For each function call, return a json object with function name and arguments wi
 
 
 if __name__ == "__main__":
-    # model_path = "/workspace/Qwen2.5-VL/qwen-vl-finetune/Qwen2.5-VL-3B-Instruct-lora-merged-100"
     model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
     processor = Qwen2_5_VLProcessor.from_pretrained(model_path)
+    model_path = "/workspace/Qwen2.5-VL/qwen-vl-finetune/output/checkpoint-100"
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model_path, torch_dtype=torch.bfloat16, attn_implementation="flash_attention_2",device_map="auto")
 
-    # Load LoRA weights
-    lora_model_path = "/workspace/Qwen2.5-VL/qwen-vl-finetune/output/checkpoint-100"
-    print(f"Loading LoRA adapter: {lora_model_path}")
-    model = PeftModel.from_pretrained(model, lora_model_path)
-
-    screenshot = "/workspace/Qwen2.5-VL/qwen-vl-finetune/session_20250720_165353/frames/frame_000003.png"
+    screenshot = "/workspace/qwen_chess_dataset/session_20250720_165353/frames/frame_000003.png"
     user_query = 'clicks to move e2 to e4'
     output_text, display_image = perform_gui_grounding(screenshot, user_query, model, processor)
 
