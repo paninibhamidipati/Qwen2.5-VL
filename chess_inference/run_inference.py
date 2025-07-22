@@ -14,6 +14,7 @@ from transformers.models.qwen2_vl.image_processing_qwen2_vl_fast import smart_re
 
 import torch
 from transformers import Qwen2_5_VLProcessor, Qwen2_5_VLForConditionalGeneration
+from peft import PeftModel
 
 def draw_point(image: Image.Image, point: list, color=None):
     if isinstance(color, str):
@@ -67,8 +68,7 @@ def perform_gui_grounding(screenshot_path, user_query, model, processor):
     input_image = Image.open(screenshot_path)
 
     # Build messages
-    message = NousFnCallPrompt().preprocess_fncall_messages(
-        messages=[
+    message = [
             Message(
                 role="system",
                 content=[ContentItem(text="""You are a helpful assistant.
@@ -91,9 +91,7 @@ For each function call, return a json object with function name and arguments wi
                     ContentItem(text=user_query),
                 ],
             ),
-        ],
-        lang=None,
-    )
+        ]
     message = [msg.model_dump() for msg in message]
 
     # Process input
@@ -108,7 +106,7 @@ For each function call, return a json object with function name and arguments wi
     ).to("cuda")
 
     # Generate output
-    output_ids = model.generate(**inputs, max_new_tokens=2048)
+    output_ids = model.generate(**inputs, max_new_tokens=2048, do_sample=False)
     generated_ids = [
         output_ids[len(input_ids) :]
         for input_ids, output_ids in zip(inputs.input_ids, output_ids)
@@ -144,9 +142,14 @@ if __name__ == "__main__":
     model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
     processor = Qwen2_5_VLProcessor.from_pretrained(model_path)
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(model_path, torch_dtype=torch.bfloat16, attn_implementation="flash_attention_2",device_map="auto")
+
+    # Load LoRA weights
+    lora_model_path = "/workspace/Qwen2.5-VL/qwen-vl-finetune/output/checkpoint-100"
+    print(f"Loading LoRA adapter: {lora_model_path}")
+    model = PeftModel.from_pretrained(model, lora_model_path)
+
     screenshot = "/workspace/Qwen2.5-VL/qwen-vl-finetune/session_20250720_165353/frames/frame_000003.png"
     user_query = 'clicks to move e2 to e4'
     output_text, display_image = perform_gui_grounding(screenshot, user_query, model, processor)
-    print(output_text)
 
     pass
