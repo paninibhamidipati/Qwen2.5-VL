@@ -38,8 +38,8 @@ PUBLIC_DATASET2 = {
 }
 
 SEQUENCES_SESSION_20250720_165353 = {
-    "annotation_path": "demo/sequences_session_20250720_165353.json",
-    "data_path": "/workspace/Qwen2.5-VL/qwen-vl-finetune",
+    "annotation_path": "/workspace/sequences_session_20250720_165353_mini.json",
+    "data_path": "/workspace/qwen_chess_dataset",
 }
 
 data_dict = {

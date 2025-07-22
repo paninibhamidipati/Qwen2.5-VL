@@ -42,10 +42,26 @@ from qwenvl.train.argument import (
     DataArguments,
     TrainingArguments,
 )
-from transformers import AutoTokenizer, AutoProcessor, Qwen2VLImageProcessor, Trainer
+from transformers import AutoTokenizer, AutoProcessor, Qwen2VLImageProcessor, Trainer, Qwen2_5_VLProcessor
+import wandb
 
 local_rank = None
+model_path = "Qwen/Qwen2.5-VL-3B-Instruct"
+processor = Qwen2_5_VLProcessor.from_pretrained(model_path)
 
+class OutputLoggingTrainer(Trainer):
+    def training_step(self, model, inputs, num_items_in_batch):
+        loss = super().training_step(model, inputs, num_items_in_batch)
+
+        model.eval()
+        outputs = model(**inputs) 
+        out_text = processor.batch_decode(
+            outputs["logits"].argmax(dim=-1), skip_special_tokens=True, clean_up_tokenization_spaces=True
+        )
+        
+        print("Output Text: ", out_text)
+        model.train()
+        return loss
 
 def rank0_print(*args):
     if local_rank == 0:
@@ -177,9 +193,10 @@ def train(attn_implementation="flash_attention_2"):
         data_module = make_supervised_data_module_packed(tokenizer=tokenizer, data_args=data_args)
     else:
         data_module = make_supervised_data_module(tokenizer=tokenizer, data_args=data_args)
-    trainer = Trainer(
+    trainer = OutputLoggingTrainer(
         model=model, processing_class=tokenizer, args=training_args, **data_module
     )
+
 
     if list(pathlib.Path(training_args.output_dir).glob("checkpoint-*")):
         logging.info("checkpoint found, resume training")
